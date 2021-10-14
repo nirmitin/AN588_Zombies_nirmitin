@@ -36,6 +36,7 @@ mean(d$age)
 mean(d$zombies_killed) 
 mean(d$years_of_education) 
 ```
+#ejv98: I(General Comment) It is very helpful how you wrote out step by step. I am actually learning a lot by reading and running your code. 
 
 Next, I calculated the population standard devaiations for each quantitative variable.
 ```{r} 
@@ -50,6 +51,8 @@ sigma_age <- sqrt(sum((age - mean(age))^2)/length(age))
 sigma_zombieskilled <- sqrt(sum((zombies_killed - mean(zombies_killed))^2)/length(zombies_killed))
 sigma_education <- sqrt(sum((years_of_education - mean(years_of_education))^2)/length(years_of_education))
 ```
+#ejv98: This runs well!
+
 ## **Question 2**
 *Use {ggplot} and make boxplots of each of these variables by gender.*
 #### Gender x Height
@@ -81,6 +84,8 @@ f
 f <- ggplot(data = d, aes(x = gender, y = years_of_education)) + geom_boxplot(fill = 'forestgreen')
 f
 ```
+
+#ejv98: Your box plots look good! I did mine in a similar way. 
 
 ## **Question 3**
 *Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?* 
@@ -461,3 +466,5 @@ for (i in 1:k) {
 }
 mean(m)
 ```
+
+#ejv98: Your code is very organized, and I actually learned a lot from it. Especially with you explaining every step. Everything seemed to run well, I wasn't getting any errors. Good job!
