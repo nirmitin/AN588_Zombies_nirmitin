@@ -1,0 +1,464 @@
+---
+title: "nirmitin_OriginalHomeworkCode_03"
+author: "Nirmiti Naik"
+date: "10/6/2021"
+output: 
+  html_document:
+    toc: TRUE
+    toc_depth: 3
+    toc_float: TRUE
+    
+
+---
+The curl and ggplot package is installed
+```{r}
+library(curl)
+library(ggplot2)
+```
+
+The zombies.csv file is loaded
+```{r}
+f <- f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall21/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+## **Question 1**
+*Calculate the population mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in var() and sd() commands as these are for samples.* 
+First, I calculated the population mean for each quantitative variable
+```{r}
+height <- d[5]
+weight <- d[6]
+age <- d[10]
+zombieskilled <- d[7]
+education <- d[8]
+mean(d$height)
+mean(d$weight)
+mean(d$age)
+mean(d$zombies_killed) 
+mean(d$years_of_education) 
+```
+#ejv98: I(General Comment) It is very helpful how you wrote out step by step. I am actually learning a lot by reading and running your code. 
+
+Next, I calculated the population standard devaiations for each quantitative variable.
+```{r} 
+height <- d[5]
+weight <- d[6]
+age <- d[10]
+zombies_killed <- d[7]
+years_of_education <- d[8]
+sigma_height <- sqrt(sum((height - mean(height))^2)/length(height))
+sigma_weight <- sqrt(sum((weight - mean(weight))^2)/length(weight))
+sigma_age <- sqrt(sum((age - mean(age))^2)/length(age))
+sigma_zombieskilled <- sqrt(sum((zombies_killed - mean(zombies_killed))^2)/length(zombies_killed))
+sigma_education <- sqrt(sum((years_of_education - mean(years_of_education))^2)/length(years_of_education))
+```
+#ejv98: This runs well!
+
+## **Question 2**
+*Use {ggplot} and make boxplots of each of these variables by gender.*
+#### Gender x Height
+```{r gender x height}
+f <- ggplot(data = d, aes(x = gender, y = height)) + geom_boxplot(fill = 'forestgreen')
+f
+```
+
+#### Gender x Weight
+```{r gender x weight}
+f <- ggplot(data = d, aes(x = gender, y = weight)) + geom_boxplot(fill = 'forestgreen')
+f
+```
+
+#### Gender x Age
+```{r gender x age}
+f <- ggplot(data = d, aes(x = gender, y = age)) + geom_boxplot(fill = 'forestgreen')
+f
+```
+
+#### Gender x # of Zombies Killed
+```{r gender x zombieskilled}
+f <- ggplot(data = d, aes(x = gender, y = zombies_killed)) + geom_boxplot(fill = 'forestgreen')
+f
+```
+
+#### Gender x Years of Education
+```{r gender x years of education}
+f <- ggplot(data = d, aes(x = gender, y = years_of_education)) + geom_boxplot(fill = 'forestgreen')
+f
+```
+
+#ejv98: Your box plots look good! I did mine in a similar way. 
+
+## **Question 3**
+*Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?* 
+
+Based on the below scatterplots, height and weight seem to be positively related to age since as age increases, so do height and weight. 
+#### Age x Height
+```{r age x height}
+e <- ggplot(data = d, aes(x = age, y = height)) + geom_point(fill = 'forestgreen')
+e
+```
+
+#### Age x Weight
+```{r age x weight }
+e <- ggplot(data = d, aes(x = age, y = weight)) + geom_point(fill = 'forestgreen') 
+e
+```
+
+## **Question 4**
+*Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?* 
+
+#### Height: 
+Height seems to be drawn from a normal distribution because the majority of the data points for height fall along the qqline which is a measure of normality. Additionally, the histogram's shape is similar to that of a normally distributed curve.   
+```{r height}
+qqnorm(d$height, main = "Normal QQ plot of height")
+qqline(d$height, col = 'forestgreen')
+```
+
+```{r}
+hist(d$height, probability = TRUE, main = 'Histogram of height')
+```
+
+#### Weight:
+Weight seems to be drawn from a normal distribution because the majority of the data points for height fall along the qqline which is a measure of normality. Additionally, the histogram's shape is similar to that of a normally distributed curve.   
+```{r}
+qqnorm(d$weight, main = "Normal QQ plot of weight")
+qqline(d$weight, col = 'forestgreen')
+```
+
+```{r}
+hist(d$weight, probability = TRUE, main = 'Histogram of weight')
+```
+
+#### Age:
+Age seems to be drawn from a normal distribution because the majority of the data points for height fall along the qqline which is a measure of normality. Additionally, the histogram's shape is similar to that of a normally distributed curve. 
+```{r}
+qqnorm(d$age, main = "Normal QQ plot of age")
+qqline(d$age, col = 'forestgreen')
+```
+
+```{r}
+hist(d$age, probability = TRUE, main = 'Histogram of age')
+```
+
+#### # of Zombies Killed:
+The number of zombies killed isn't drawn from a normal distribution because the data points don't fall on the qqline - I think they're drawn from ??? The histogram also doesn't suggest this variable being drawn from normal distribution since there is a skew to the right. 
+```{r}
+qqnorm(d$zombies_killed, main = "Normal QQ plot of zombies killed")
+qqline(d$zombies_killed, col = 'forestgreen')
+```
+
+```{r}
+hist(d$zombies_killed, probability = TRUE, main = 'Histogram of zombies killed')
+```
+
+#### Years of Education:
+The years of education that a survivor has doesn't seem to be normally distributed since the data points don't fall on the qqline - it seems to draw from ??? The histogram for this variable is also skewed right like for that of # of zombies killed, this further suggests that years of education isn't drawn from normal distribution. 
+```{r}
+qqnorm(d$years_of_education, main = "Normal QQ plot of years of education")
+qqline(d$years_of_education, col = 'forestgreen')
+```
+
+```{r}
+hist(d$years_of_education, probability = TRUE, main = 'Histogram of years of education
+     ')
+```
+
+## **Question 5**
+*Now use the sample() function to sample ONE subset of 30 zombie survivors (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.*
+
+####Sampling of subset - height
+```{r}
+k <- 1 # of samples
+n <- 30 # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(d$height, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### Mean & sample std dev - height 
+I can't figure out how to calculate sample standard deviation, it keeps outputting NA (running issue)
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sd(stdev, na.rm = FALSE)
+```
+
+#### standard error - height 
+I'm unsure why this is giving an output but just stdev is returning NA
+```{r}
+sem <- stdev/sqrt(n)  
+head(sem)
+```
+
+#### 95% CI - height 
+I'm not sure which of these is correct
+```{r}
+qnorm(0.95, mean = mean(m), sd=1)
+quantile(d$height, c(0.025, 0.975))
+```
+
+#### Sampling of subset - weight
+```{r}
+k <- 1 # of samples
+n <- 30 # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(d$weight, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### Mean & sample std dev - weight 
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sd(stdev, na.rm = FALSE)
+```
+
+#### standard error - weight 
+```{r}
+sem <- stdev/sqrt(n)  
+head(sem)
+```
+
+#### 95% CI - weight 
+What's the correct way to measure CI? 
+```{r}
+qnorm(0.95, mean = mean(m), sd=1)
+quantile(d$weight, c(0.025, 0.975))
+```
+
+#### Sampling of subset - age
+```{r}
+k <- 1 # of samples
+n <- 30 # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(d$age, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### Mean & sample std dev - age 
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sd(stdev, na.rm = FALSE)
+```
+
+#### standard error - age 
+```{r}
+sem <- stdev/sqrt(n)  
+head(sem)
+```
+
+#### 95% CI - age 
+What's the correct measure of CI? 
+```{r}
+qnorm(0.95, mean = mean(m), sd=1)
+quantile(d$age, c(0.025, 0.975))
+```
+
+#### Sampling of subset - # of zombies killed
+```{r}
+k <- 1 # of samples
+n <- 30 # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(d$zombies_killed, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### Mean & sample std dev - # of zombies killed 
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sd(stdev, na.rm = FALSE)
+```
+
+#### standard error - # of zombies killed 
+```{r}
+sem <- stdev/sqrt(n)  
+head(sem)
+```
+
+#### 95% CI - # of zombies killed 
+What's the correct measure of CI for not normal distribution? 
+```{r}
+quantile(d$zombies_killed, c(0.025, 0.975))
+```
+
+#### Sampling of subset - years of education
+```{r}
+k <- 1 # of samples
+n <- 30 # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+  s[[i]] <- sample(d$years_of_education, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### Mean & sample std dev - years of education 
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+stdev <- NULL
+for (i in 1:k) {
+    stdev[i] <- sd(s[[i]])
+}
+sd(stdev, na.rm = FALSE)
+```
+
+#### standard error - years of education 
+I'm unsure why this is giving an output but just stdev is returning NA
+```{r}
+sem <- stdev/sqrt(n)  
+head(sem)
+```
+
+#### 95% CI - years of education 
+What's the correct measure of CI for not normal distribution? 
+```{r}
+quantile(d$years_of_education, c(0.025, 0.975))
+```
+\
+## **Question 6**
+*Now draw 99 more random samples of 30 zombie survivors out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?*
+
+#### sampling subset of zombies  - height
+```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(d$height, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### sampling subset of zombies  - height
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+```
+
+#### sampling subset of zombies  - weight
+```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(d$weight, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### sampling subset of zombies  - weight
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+```
+
+#### sampling subset of zombies  - age
+```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(d$age, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### sampling subset of zombies  - age
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+```
+
+#### sampling subset of zombies  - # of zombies killed
+```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(d$zombies_killed, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### sampling subset of zombies  - # of zombies killed
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+```
+
+#### sampling subset of zombies  - years of education
+```{r}
+k <- 99  # number of samples
+n <- 30  # size of each sample
+s <- NULL  # dummy variable to hold each sample
+for (i in 1:k) {
+    s[[i]] <- sample(d$years_of_education, size = n, replace = FALSE)
+}
+head(s)
+```
+
+#### sampling subset of zombies  - years of education
+```{r}
+m <- NULL
+for (i in 1:k) {
+    m[i] <- mean(s[[i]])
+}
+mean(m)
+```
+
+## Good Job-WK
