@@ -39,6 +39,8 @@ mean(d$zombies_killed)
 mean(d$years_of_education) 
 ```
 
+*what is the purpose of height <- d[5]?*
+
 Next, I calculated the population standard deviations for each quantitative variable.
 ```{r} 
 height <- d[5]
@@ -52,6 +54,9 @@ sigma_age <- sqrt(sum((age - mean(age))^2)/length(age))
 sigma_zombieskilled <- sqrt(sum((zombies_killed - mean(zombies_killed))^2)/length(zombies_killed))
 sigma_education <- sqrt(sum((years_of_education - mean(years_of_education))^2)/length(years_of_education))
 ```
+
+*Good! can also put the equation into a function for efficiency*
+
 ## **Question 2**
 *Use {ggplot} and make boxplots of each of these variables by gender.*
 #### Gender x Height
@@ -99,6 +104,8 @@ e
 e <- ggplot(data = d, aes(x = age, y = weight)) + geom_point(fill = 'forestgreen') 
 e
 ```
+
+*Can also add a line using geom_smooth() to have a better look at it*
 
 ## **Question 4**
 *Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?* 
@@ -177,6 +184,8 @@ mheight1
 sdheight1 <- sd(sample1$height)
 sdheight1
 ```
+
+*seems to be working now!*
 
 #### standard error - height 
 ```{r}
@@ -275,6 +284,8 @@ Since this variable isn't normally distributed, I will construct the 95% CI by b
 ```{r}
 quantile(sample1$years_of_education, c(0.025, 0.975))
 ```
+
+*is using the quantile function bootstrapping?*
 
 ## **Question 6**
 *Now draw 99 more random samples of 30 zombie survivors out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?*
@@ -408,3 +419,5 @@ mean(m)
 finalmean <- (myearsofeducation1 + mean(m))/2
 finalmean
 ```
+
+*histograms?*
